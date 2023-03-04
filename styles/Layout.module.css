@@ -5,7 +5,7 @@
   align-items: center;
   width: 100%;
   min-height: 100%;
-  background: rgb(255, 255, 255);
+  background: rgb(244, 241, 234);
 }
 
 .pageLayout{
@@ -23,6 +23,16 @@
   margin: 10px 0px;
   padding: 20px 0px;
   width: 100%;
+}
+.header h1{
+  color: rgb(85, 67,53);
+  font-size: 35px;
+  font-weight: bold;
+}
+.header h4{
+  color: rgb(158, 138, 127);
+  font-size: 18px;
+  font-weight: bold;
 }
 
 @media (max-width: 900px){
