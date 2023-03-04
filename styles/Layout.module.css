@@ -15,6 +15,16 @@
   margin: 0px auto;
 }
 
+.header{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0px;
+  padding: 20px 0px;
+  width: 100%;
+}
+
 @media (max-width: 900px){
   .pageLayout{
     width: 95%; 
