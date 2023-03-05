@@ -40,3 +40,15 @@
 .fileInput button:hover{
 	background: rgb(88, 83, 78);
 }
+
+.fileContent{
+	display: flex;
+	flex-direction: column;
+	gap: 10px 0px;
+}
+
+.fileContent .fileItem{
+	display: flex;
+	font-size: 10px;
+	text-align: left;
+}
