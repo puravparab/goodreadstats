@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
 
+import Papa from 'papaparse';
+
 import styles from '../styles/FileUpload.module.css'
 
 const FileUpload = () => {
@@ -49,28 +51,15 @@ const FileUpload = () => {
 
 	// When user clicks on the upload button
 	const handleFileUpload = () => {
-		const reader = new FileReader()
-		reader.readAsText(rawFile)
-
-		reader.onload = (e) => {
-			// setFileData(e.target.result)
-			const csv_data = e.target.result
-			const rows = csv_data.split('\n')
-			const headers = rows[0].split(',')
-
-			const jsonData = []
-
-			for (let i=1; i < rows.length; i++){
-				const row = rows[i].split(',')
-				const item = {}
-				for (let j=0; j < headers.length; j++){
-					item[headers[j]] = row[j]
-				}
-				jsonData.push(item)
-			}
-
-			localStorage.setItem('goodreads_data', JSON.stringify(jsonData))
-		}
+		let rows = []
+		Papa.parse(rawFile, {
+			complete: (results) => {
+				rows = results.data;
+				localStorage.setItem('goodreads_data', JSON.stringify(rows))
+			},
+			header: true,
+			skipEmptyLines: true,
+		})
 	}
 
 	return (
