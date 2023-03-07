@@ -7,17 +7,6 @@ import styles from '../styles/FileUpload.module.css'
 const FileUpload = () => {
 	const [rawFile, setRawFile] = useState('')
 
-	// Is column included?
-	const isIncluded = (col_index, header) => {
-		const excluded_list = ['Author l-f', 'ISBN13', 'Binding', 'Year Published', 'Bookshelves with positions', 'Exclusive Shelf', 'My Review', 'Spoiler', 'Private Notes', 'Read Count', 'Owned Copies']
-		for (let i = 0; i < excluded_list.length; i++){
-			if (header[col_index] == excluded_list[i]){
-				return false
-			}
-		}
-		return true
-	}
-
 	// When user selects a .csv file
 	const handleFileInputChange = (e) =>{
 		const file = e.target.files[0]
