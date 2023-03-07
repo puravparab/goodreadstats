@@ -6,31 +6,6 @@ import styles from '../styles/FileUpload.module.css'
 
 const FileUpload = () => {
 	const [rawFile, setRawFile] = useState('')
-	// const [fileData, setFileData] = useState('')
-	// const [fileRender, setFileRender] = useState('')
-
-	// useEffect(() => {
- //    if (fileData) {
- //    	const rowList = fileData.split('\n')
- //      setFileRender(rowList.map((line, index) => {
- //      	const cols = line.split(',')
- //        return (
- //        	<div key={index} className={styles.fileRow}>
- //        		{cols.map((col, i) => {
- //        			return (
- //        				(isIncluded(i, rowList[0].split(',')) ? 
-	//         				<div key={i} className={styles.fileCol}>
-	// 	        				{col}
-	// 	        			</div>
-	// 	        			: ""
- //        				)
- //        			)
- //        		})}
- //        	</div>
- //        )
- //      }))
- //    }
- //  }, [fileData])
 
 	// Is column included?
 	const isIncluded = (col_index, header) => {

@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
 
+import styles from '../styles/DataTable.module.css'
+
 const DataTable = () => {
 	const [jsonData, setJSONData] = useState([])
 	const [headers, setHeaders] = useState([])
@@ -14,31 +16,33 @@ const DataTable = () => {
 	}, [])
 
 	return (
-		<>	
+		<>
 			{headers.length > 0 && jsonData.length > 0 && (
-				<table>
-					<thead>
-						<tr>
-							{headers.map(header => (
-								<th key={header}>
-									{header}
-								</th>
-							))}
-						</tr>
-					</thead>
-
-					<tbody>
-						{jsonData.map((data, index) => (
-							<tr key={index}>
+				<div className={styles.dataTableContainer}>	
+					<table className={styles.dataTable}>
+						<thead>
+							<tr>
 								{headers.map(header => (
-									<td key={header}>
-										{data[header]}
-									</td>
+									<th key={header}>
+										{header}
+									</th>
 								))}
 							</tr>
-						))}
-					</tbody>
-				</table>
+						</thead>
+
+						<tbody>
+							{jsonData.map((data, index) => (
+								<tr key={index}>
+									{headers.map(header => (
+										<td key={header}>
+											{data[header]}
+										</td>
+									))}
+								</tr>
+							))}
+						</tbody>
+					</table>
+				</div>
 			)}
 		</>
 	)
