@@ -56,6 +56,7 @@ const FileUpload = () => {
 			complete: (results) => {
 				rows = results.data;
 				localStorage.setItem('goodreads_data', JSON.stringify(rows))
+				window.dispatchEvent(new Event("storage"));
 			},
 			header: true,
 			skipEmptyLines: true,
