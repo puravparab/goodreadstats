@@ -3,6 +3,7 @@ import Head from 'next/head'
 import Header from '../components/Header.js'
 import FileUpload from '../components/FileUpload.js'
 import DataTable from '../components/DataTable.js'
+import Details from '../components/Details.js'
 
 const Home = () => {
 	return (
@@ -24,8 +25,8 @@ const Home = () => {
 
 			<Header />
 			<FileUpload />
+			<Details />
 			<DataTable />
-			
 		</>
 	)
 }

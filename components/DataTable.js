@@ -17,7 +17,7 @@ const DataTable = () => {
 
 	// Is column included?
 	const isIncluded = (header) => {
-		const excluded_list = ['Author l-f', 'Binding', 'Year Published', 'Bookshelves with positions', 'Exclusive Shelf', 'My Review', 'Spoiler', 'Private Notes', 'Read Count', 'Owned Copies']
+		const excluded_list = ['Author l-f', 'Binding', 'Year Published', 'Bookshelves with positions', 'Bookshelves', 'My Review', 'Spoiler', 'Private Notes', 'Read Count', 'Owned Copies']
 		for (let i =0; i < excluded_list.length; i++){
 			if (header == excluded_list[i]){
 				return false
