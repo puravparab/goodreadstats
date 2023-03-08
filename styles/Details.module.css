@@ -1,0 +1,23 @@
+.detailsContainer{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: flex-start;
+	flex-wrap: wrap;
+	gap: 20px 60px;
+	width: 100%;
+	margin: 0px 0px 40px 0px;
+}
+
+.detailsContainer .detailsColumn{
+	display: flex;
+	flex-direction: column;
+	gap: 5px 0px;
+}
+
+.detailsContainer .detailsColumn h4{
+	font-size: 19px;
+}
+.detailsContainer .detailsColumn p{
+	font-size: 18px;
+}

@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
 
+import styles from '../styles/Details.module.css'
+
 const Details = () => {
 	const [detailsVisible, setDetailsVisible] = useState(false)
 	const [renderDetails, setRenderDetails] = useState("")
@@ -24,8 +26,7 @@ const Details = () => {
 		let authors_read_list = {}
 		let total_authors = 0
 		let authors_list = {}
-		let author1 = ""
-
+		
 		// Iterate through books
 		for (let i=0; i < data.length; i++){
 			// If book is read
@@ -53,34 +54,39 @@ const Details = () => {
 			total_books_read++
 		}
 
+		// Get top authors
 		let max_books = 0
+		let author1 = ""
 		for (var key in authors_read_list){
 			if (authors_read_list[key] > max_books){
 				author1 = key
 				max_books = authors_read_list[key]
 			}
 		}
-		
+
 		setRenderDetails(
 			<>
-				<div>
+				<div className={styles.detailsColumn}>
 					<p>Books read: {books_read}</p>
 					<p>Total books: {total_books_read}</p>
 					<p>Pages read: {pages_read}</p>
 				</div>
-				<div>
+				<div className={styles.detailsColumn}>
 					<p>No of authors read: {authors_read}</p>
 					<p>Total authors: {total_authors}</p>
 				</div>
-				<div>
-					<h4>Top authors:</h4>
-					<p>1. {author1} </p>
-				</div>
+				{author1 == "" ?
+					"" :
+					<div className={styles.detailsColumn}>
+						<h4>Top authors:</h4>
+						<p>1. {author1} </p>
+					</div> 
+				}
 			</>
 		)
 	}
 	return (
-		<div>
+		<div className={styles.detailsContainer}>
 			{detailsVisible ?
 				(renderDetails): ""
 			}
