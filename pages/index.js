@@ -4,6 +4,7 @@ import Header from '../components/Header.js'
 import FileUpload from '../components/FileUpload.js'
 import DataTable from '../components/DataTable.js'
 import Details from '../components/Details.js'
+import Charts from '../components/Charts/Charts.js'
 
 const Home = () => {
 	return (
@@ -27,6 +28,7 @@ const Home = () => {
 			<FileUpload />
 			<Details />
 			<DataTable />
+			<Charts />
 		</>
 	)
 }
