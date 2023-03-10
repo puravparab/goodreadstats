@@ -5,6 +5,7 @@ import styles from '../styles/Details.module.css'
 const Details = () => {
 	const [detailsVisible, setDetailsVisible] = useState(false)
 	const [renderDetails, setRenderDetails] = useState("")
+	
 	// Listen for changes to local storage
 	useEffect(() => {
 		window.addEventListener('storage', () => {
