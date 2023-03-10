@@ -26,7 +26,7 @@
 }
 
 .bookCharts .bookChartsMain .chart{
-	display: flex;
+	display: block;
 	min-width: 600px;
 	border-radius: 20px;
 	background: whitesmoke;
