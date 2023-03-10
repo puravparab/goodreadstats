@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react'
 
 import BookCharts from './BookCharts.js'
+import styles from '../../styles/Charts.module.css'
 
 const Charts = () => {
 	return (
-		<div>
+		<div className={styles.chartsContainer}>
 			<BookCharts />
 		</div>
 	)
