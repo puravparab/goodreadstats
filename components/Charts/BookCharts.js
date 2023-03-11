@@ -12,10 +12,15 @@ const BookCharts = () => {
 	const [data1, setData1] = useState({})
 	const [options1, setOptions1] = useState({})
 
+	// Date read vs pages read
+	const [data2, setData2] = useState({})
+	const [options2, setOptions2] = useState({})
+
 	useEffect(() => {
 		window.addEventListener('storage', () => {
 			const data = JSON.parse(localStorage.getItem('goodreads_data'))
 			createChart1(data)
+			// createChart2(data)
 			setDetailsVisible(true)
 		})
 	}, [])
@@ -135,7 +140,7 @@ const BookCharts = () => {
 						text: 'Date Published'
 					},
 					min: min_published_date,
-					max: max_published_date,
+					max: max_published_date + 50,
 					ticks: {
 						stepSize: y_step_size,
 						maxTicksLimit: Math.ceil((max_published_date - 2023) / 100) + 10
@@ -167,6 +172,10 @@ const BookCharts = () => {
 		})
 	}
 
+// 	const createChart2 = (data) => {
+// 
+// 	}
+
 	return (
 		<div className={styles.bookCharts}>
 			{detailsVisible ?
@@ -175,7 +184,10 @@ const BookCharts = () => {
 			{detailsVisible ?
 				<div className={styles.bookChartsMain}>
 					<div className={styles.chart}>
-							<Scatter options={options1} data={data1}/>
+						<Scatter options={options1} data={data1}/>
+					</div>
+					<div className={styles.chart}>
+						{/* <Scatter options={options2} data={data2}/> */}
 					</div>
 				</div>
 				: ""
