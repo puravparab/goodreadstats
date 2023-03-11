@@ -1,12 +1,25 @@
 .detailsContainer{
 	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 30px 0px;
+	width: 100%;
+	margin: 0px 0px 50px 0px;
+	padding: 20px 0px 0px 0px;
+	border-top: 1px solid rgb(88, 83, 78);
+}
+.detailsContainer h1{
+	color: rgb(85, 67,53);
+}
+
+.detailsContent{
+	display: flex;
 	flex-direction: row;
 	justify-content: center;
 	align-items: flex-start;
 	flex-wrap: wrap;
 	gap: 20px 60px;
-	width: 100%;
-	margin: 0px 0px 40px 0px;
 }
 
 .detailsContainer .detailsColumn{
@@ -17,6 +30,7 @@
 
 .detailsContainer .detailsColumn h4{
 	font-size: 19px;
+	color: rgb(88, 83, 78);
 }
 .detailsContainer .detailsColumn p{
 	font-size: 18px;

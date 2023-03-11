@@ -87,11 +87,18 @@ const Details = () => {
 		)
 	}
 	return (
-		<div className={styles.detailsContainer}>
+		<>
 			{detailsVisible ?
-				(renderDetails): ""
+				<div className={styles.detailsContainer}>
+						<h1>Summary</h1>
+						<div className={styles.detailsContent}>
+							{renderDetails}
+						</div>
+				</div>
+
+				: ""
 			}
-		</div>
+		</>
 	)
 }
 
