@@ -130,20 +130,18 @@ const BookCharts = () => {
 					text: 'Date read/added vs Date Published',
 					font: { size: 16 },
 				},
-				// tooltip: {
-				// 	callbacks: {
-				// 		label: function(context) {
-				// 			let label = context.dataset.label || '';
-				// 			if (label) {
-				// 				label += ': ';
-				// 			}
-				// 			if (context.parsed.y !== null) {
-				// 				label += new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(context.parsed.y);
-				// 			}
-				// 			return label;
-				// 		}
-				// 	}
-				// }
+				tooltip: {
+					callbacks: {
+						label: function(tooltipItem) {
+							const dataIndex= tooltipItem.dataIndex
+							return [
+								tooltipItem.dataset.data[dataIndex].book,
+								"Read/Added : " + tooltipItem.dataset.data[dataIndex].x,
+								"Published : " + tooltipItem.dataset.data[dataIndex].y
+							]
+						}
+					}
+				}
 			},
 		})
 	}
