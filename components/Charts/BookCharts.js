@@ -25,16 +25,23 @@ const BookCharts = () => {
 		let readxpublished = []
 		// json containing x(date added) and y(date published) values
 		let addedxpublished = []
-		let book_list = []
 
 		let max_read_date = 1900
 		let min_read_date = 3000
 		let max_published_date = -10000
 		let min_published_date = 3000
 
+		// Iterate through the list of books
 		for (let i=0; i < data.length; i++){
+			// Store from "Date Read"
 			let year_read = parseInt(data[i]["Date Read"].split('/')[2])
-			let date_added = parseInt(data[i]["Date Added"].split('/')[2])
+			let month_read = parseInt(data[i]["Date Read"].split('/')[0])
+
+			// Store frm "Date Added"
+			let year_added = parseInt(data[i]["Date Added"].split('/')[2])
+			let month_added = parseInt(data[i]["Date Added"].split('/')[0])
+
+			// Store year book was published
 			let year_published = parseInt(data[i]["Original Publication Year"])
 
 			// If "Original Publication Year" is empty
@@ -46,9 +53,14 @@ const BookCharts = () => {
 			if (data[i]["Exclusive Shelf"] == 'read'){
 				// If "Date Read" is not empty add to list
 				if (year_read){
+					// 100 / 13 = 7.692 (eg: 2020.0 = Jan, 2020.92 = Dec)
+					let x_date = ((year_read*100) + (month_read-1)*7.692) / 100 
+
 					readxpublished.push({
-						x: year_read,
+						x: x_date,
 						y: year_published,
+						x_year: year_read,
+						x_month: month_read,
 						book: data[i]["Title"]
 					})
 					
@@ -61,22 +73,28 @@ const BookCharts = () => {
 			} 
 			else{
 				// If "Date Added" is not empty add to list
-				if (date_added){
+				if (year_added){
+					// 100 / 13 = 7.692 (eg: 2020.0 = Jan, 2020.92 = Dec)
+					let x_date = ((year_added*100) + (month_added-1)*7.692) / 100 
+
 					addedxpublished.push({
-						x: date_added,
+						x: x_date,
 						y: year_published,
+						x_year: year_added,
+						x_month: month_added,
 						book: data[i]["Title"]
 					})
 
 					// Updated chart limits
-					if (date_added >= max_read_date){max_read_date = date_added + 1}
-					if (date_added <= min_read_date){min_read_date = date_added - 1}
+					if (year_added >= max_read_date){max_read_date = year_added + 1}
+					if (year_added <= min_read_date){min_read_date = year_added - 1}
 					if (year_published >= max_published_date){max_published_date = year_published + 2}
 					if (year_published <= min_published_date){min_published_date = year_published - 1}
 				}
 			}
 		}
 		
+		// Figure out step size
 		const yRange = max_published_date - min_published_date;
 		const yFactor = 1 + Math.exp(-(2023 - max_published_date) / (yRange / 4));
 		let y_step_size = Math.ceil((yRange / 100) * yFactor);
@@ -84,13 +102,13 @@ const BookCharts = () => {
 		setData1({
 			datasets: [
 				{
-					label: "Books Read",
+					label: "Book Read",
 					data: readxpublished,
 					pointRadius: 4,
 					pointBackgroundColor: "rgb(102,187,106)",
 				},
 				{
-					label: "Books Added",
+					label: "Book Added",
 					data: addedxpublished,
 					pointRadius: 4,
 					pointBackgroundColor: "rgb(255,178,0)",
@@ -133,10 +151,13 @@ const BookCharts = () => {
 				tooltip: {
 					callbacks: {
 						label: function(tooltipItem) {
-							const dataIndex= tooltipItem.dataIndex
+							const dataIndex = tooltipItem.dataIndex
+							const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+							const month = months[tooltipItem.dataset.data[dataIndex].x_month - 1]
+
 							return [
 								tooltipItem.dataset.data[dataIndex].book,
-								"Read/Added : " + tooltipItem.dataset.data[dataIndex].x,
+								"Read/Added : " + month + " " + tooltipItem.dataset.data[dataIndex].x_year,
 								"Published : " + tooltipItem.dataset.data[dataIndex].y
 							]
 						}
