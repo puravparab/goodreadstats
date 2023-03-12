@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 
 import 'chart.js/auto'
-import { Scatter } from 'react-chartjs-2';
+import { Scatter, Bar } from 'react-chartjs-2';
 
 import styles from '../../styles/Charts.module.css'
 
@@ -20,7 +20,7 @@ const BookCharts = () => {
 		window.addEventListener('storage', () => {
 			const data = JSON.parse(localStorage.getItem('goodreads_data'))
 			createChart1(data)
-			// createChart2(data)
+			createChart2(data)
 			setDetailsVisible(true)
 		})
 	}, [])
@@ -172,9 +172,103 @@ const BookCharts = () => {
 		})
 	}
 
-// 	const createChart2 = (data) => {
+	const createChart2 = (data) => {
+		// JSON containing pages vs date read
+		let pagesxread = []
+		
+		// JSON that takes in the x_date as key and stores total pages
+		let date_json = {}
+
+		// Iterate through list of books
+		for (let i=0; i < data.length; i++){
+			if (data[i]["Exclusive Shelf"] == 'read'){
+				// Store from "Date Read"
+				let year_read = parseInt(data[i]["Date Read"].split('/')[2])
+				let month_read = parseInt(data[i]["Date Read"].split('/')[0])
+
+				if (year_read){
+					// 100 / 13 = 7.692 (eg: 2020.0 = Jan, 2020.92 = Dec)
+					let x_date = ((year_read*100) + (month_read-1)*7.692) / 100 
+
+					let num_pages = parseInt(data[i]["Number of Pages"])
+					if (num_pages != null){
+						if (date_json[x_date] != null){
+							date_json[x_date] += num_pages
+						} else{
+							date_json[x_date] = num_pages
+						}
+					}
+				}
+			}
+		}
+
+		console.log(date_json)
+		for (var key in date_json){
+			pagesxread.push({
+				x: key,
+				y: date_json[key]
+			})
+		}
+
+		console.log(pagesxread)
+
+		setData2({
+			datasets: [
+				{
+					label: "Pages Read",
+					data: pagesxread,
+					backgroundColor: "rgb(102,187,106)",
+				},
+			]
+		})
+
+		setOptions2({
+			aspectRatio: 1,
+			scales: {
+				x: {
+					title: {
+						display: true,
+						text: 'Date Read'
+					},
+					// ticks: {
+					// 	stepSize: 1
+					// }
+				},
+				y: {
+					title: {
+						display: true,
+						text: 'Number of pages read'
+					},
+					// ticks: {
+					// 	stepSize: 1,
+					// 	// maxTicksLimit: Math.ceil((max_published_date - 2023) / 100) + 10
+					// }
+				}
+			},
+			plugins: {
+				title: {
+					display: true,
+					text: 'Date read vs Number of pages',
+					font: { size: 16 },
+				},
+				tooltip: {
+					callbacks: {
+// 						label: function(tooltipItem) {
+// 							const dataIndex = tooltipItem.dataIndex
+// 							const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+// 							const month = months[tooltipItem.dataset.data[dataIndex].x_month - 1]
 // 
-// 	}
+// 							return [
+// 								tooltipItem.dataset.data[dataIndex].book,
+// 								"Read/Added : " + month + " " + tooltipItem.dataset.data[dataIndex].x_year,
+// 								"Published : " + tooltipItem.dataset.data[dataIndex].y
+// 							]
+// 						}
+					}
+				}
+			},
+		})
+	}
 
 	return (
 		<div className={styles.bookCharts}>
@@ -187,7 +281,7 @@ const BookCharts = () => {
 						<Scatter options={options1} data={data1}/>
 					</div>
 					<div className={styles.chart}>
-						{/* <Scatter options={options2} data={data2}/> */}
+						<Bar options={options2} data={data2}/>
 					</div>
 				</div>
 				: ""
