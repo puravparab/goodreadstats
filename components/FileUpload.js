@@ -35,9 +35,14 @@ const FileUpload = () => {
 
 	// Validate if data is exported from goodreads
 	const validate_csv = (rows) => {
-		const categories = ['Book Id', 'Title', 'Author', 'Additional Authors', 'ISBN',	'ISBN13',	'My Rating', 'Average Rating',	'Publisher', 'Number of Pages',	'Original Publication Year', 'Date Read',	'Date Added']
+		const categories = ['Book Id', 'Title', 'Author', 'Additional Authors', 'ISBN',	'ISBN13',	'My Rating', 'Average Rating', 'Publisher', 'Number of Pages',	'Original Publication Year', 'Date Read',	'Date Added']
+		// If rows has no elements invalidate it
+		if (rows.length < 1){
+			return false
+		}
+		// Check if required categories exist
 		for (let i=0; i < categories.length; i++){
-			if (rows[0][categories[i]]){
+			if (rows[0].hasOwnProperty(categories[i])){
 				continue
 			} else{
 				return false
