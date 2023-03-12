@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-
 import 'chart.js/auto'
+import 'chartjs-adapter-moment';
 import { Scatter, Bar } from 'react-chartjs-2';
 
 import styles from '../../styles/Charts.module.css'
@@ -25,6 +25,7 @@ const BookCharts = () => {
 		})
 	}, [])
 
+	// Chart 1: Date read/added vs date published
 	const createChart1 = (data) => {
 		// json containing x(date read) and y(date published) values
 		let readxpublished = []
@@ -172,6 +173,7 @@ const BookCharts = () => {
 		})
 	}
 
+	// Chart 2: Number of pages read per month
 	const createChart2 = (data) => {
 		// JSON containing pages vs date read
 		let pagesxread = []
@@ -185,32 +187,36 @@ const BookCharts = () => {
 				// Store from "Date Read"
 				let year_read = parseInt(data[i]["Date Read"].split('/')[2])
 				let month_read = parseInt(data[i]["Date Read"].split('/')[0])
+				let day_read = parseInt(data[i]["Date Read"].split('/')[1])
 
+				// Store in formate ('YYYY-MM-DD')
+				let date_read = year_read + "-" + month_read + "-" + day_read
+
+				// If year read is not empty
 				if (year_read){
-					// 100 / 13 = 7.692 (eg: 2020.0 = Jan, 2020.92 = Dec)
-					let x_date = ((year_read*100) + (month_read-1)*7.692) / 100 
-
 					let num_pages = parseInt(data[i]["Number of Pages"])
+					// If number of pages is not empty
 					if (num_pages != null){
-						if (date_json[x_date] != null){
-							date_json[x_date] += num_pages
-						} else{
-							date_json[x_date] = num_pages
+						// If entry exists add pages
+						if (date_json[date_read] != null){
+							date_json[date_read] += num_pages
+						} 
+						// Id entry does not exists create it
+						else{
+							date_json[date_read] = num_pages
 						}
 					}
 				}
 			}
 		}
 
-		console.log(date_json)
+		// Iterate through date_json
 		for (var key in date_json){
 			pagesxread.push({
-				x: key,
+				x: new Date(key),
 				y: date_json[key]
 			})
 		}
-
-		console.log(pagesxread)
 
 		setData2({
 			datasets: [
@@ -226,29 +232,28 @@ const BookCharts = () => {
 			aspectRatio: 1,
 			scales: {
 				x: {
+					type: 'time',
+					time: {
+						displayFormats: {
+							month: 'MMM YYYY'
+						}
+					},
 					title: {
 						display: true,
 						text: 'Date Read'
-					},
-					// ticks: {
-					// 	stepSize: 1
-					// }
+					}
 				},
 				y: {
 					title: {
 						display: true,
 						text: 'Number of pages read'
-					},
-					// ticks: {
-					// 	stepSize: 1,
-					// 	// maxTicksLimit: Math.ceil((max_published_date - 2023) / 100) + 10
-					// }
+					}
 				}
 			},
 			plugins: {
 				title: {
 					display: true,
-					text: 'Date read vs Number of pages',
+					text: 'Number of pages read per month',
 					font: { size: 16 },
 				},
 				tooltip: {
