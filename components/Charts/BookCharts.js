@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import 'chart.js/auto'
 import 'chartjs-adapter-moment';
-import { Scatter, Bar } from 'react-chartjs-2';
+import { Scatter, Bar, Line} from 'react-chartjs-2';
 
 import styles from '../../styles/Charts.module.css'
 
@@ -16,11 +16,16 @@ const BookCharts = () => {
 	const [data2, setData2] = useState({})
 	const [options2, setOptions2] = useState({})
 
+	// Date read vs number of books read
+	const [data3, setData3] = useState({})
+	const [options3, setOptions3] = useState({})
+
 	useEffect(() => {
 		window.addEventListener('storage', () => {
 			const data = JSON.parse(localStorage.getItem('goodreads_data'))
 			createChart1(data)
 			createChart2(data)
+			createChart3(data)
 			setDetailsVisible(true)
 		})
 	}, [])
@@ -178,7 +183,7 @@ const BookCharts = () => {
 		let pagesxread = []
 		
 		// JSON that takes in the x_date as key and stores total pages
-		let date_json = {}
+		let temp_json = {}
 
 		// Iterate through list of books
 		for (let i=0; i < data.length; i++){
@@ -197,12 +202,12 @@ const BookCharts = () => {
 					// If number of pages is not empty
 					if (num_pages != null){
 						// If entry exists add pages
-						if (date_json[date_read] != null){
-							date_json[date_read] += num_pages
+						if (temp_json[date_read] != null){
+							temp_json[date_read] += num_pages
 						} 
 						// Id entry does not exists create it
 						else{
-							date_json[date_read] = num_pages
+							temp_json[date_read] = num_pages
 						}
 					}
 				}
@@ -210,21 +215,19 @@ const BookCharts = () => {
 		}
 
 		// Iterate through date_json
-		for (var key in date_json){
+		for (var key in temp_json){
 			pagesxread.push({
 				x: new Date(key),
-				y: date_json[key]
+				y: temp_json[key]
 			})
 		}
 
 		setData2({
-			datasets: [
-				{
-					label: "Pages Read",
-					data: pagesxread,
-					backgroundColor: "rgb(102,187,106)",
-				},
-			]
+			datasets: [{
+				label: "Pages Read",
+				data: pagesxread,
+				backgroundColor: "rgb(102,187,106)",
+			}]
 		})
 
 		setOptions2({
@@ -270,6 +273,113 @@ const BookCharts = () => {
 		})
 	}
 
+	// Cahrt 3: Number of books read per month
+	const createChart3 = (data) => {
+		// JSON containing books vs month data
+		let bookxmonth = []
+
+		let temp_json = {}
+
+		// Iterate through list of books
+		for (let i=0; i<data.length; i++){
+			if (data[i]["Exclusive Shelf"] == 'read'){
+				// Store from "Date Read"
+				let year_read = parseInt(data[i]["Date Read"].split('/')[0])
+				let month_read = parseInt(data[i]["Date Read"].split('/')[1])
+				// Store in formate ('YYYY-MM')
+				let date_read = year_read + "-" + month_read
+				// Store book name
+				let book_name = data[i]["Title"]
+
+				// If year read is not empty
+				if (year_read){
+					// If entry exists
+					if (temp_json[date_read]){
+						temp_json[date_read]["num_books"] += 1
+						temp_json[date_read]["book_list"].push(book_name)
+					} else{
+						temp_json[date_read] = {
+							num_books: 1,
+							book_list: [book_name]
+						}
+					}
+				}
+			}
+		}
+
+		// Iterate through temp_json and populate bookxmonth
+		for (const key in temp_json){
+			bookxmonth.push({
+				x: new Date(key),
+				y: temp_json[key]["num_books"],
+				book_list: temp_json[key]["book_list"]
+			})
+		}
+
+		setData3({
+			datasets: [{
+				label: "Books read",
+				data: bookxmonth,
+				pointRadius: 4,
+				backgroundColor: "rgb(102,187,106)",
+				borderColor: "rgb(102,187,106)",
+			}]
+		})
+
+		setOptions3({
+			aspectRatio: 1,
+			scales: {
+				x: {
+					type: 'time',
+					time: {
+						displayFormats: {
+							month: 'MMM YYYY'
+						}
+					},
+					title: {
+						display: true,
+						text: 'Date Read'
+					}
+				},
+				y: {
+					title: {
+						display: true,
+						text: 'Number of books read'
+					},
+					min: 0,
+				}
+			},
+			plugins: {
+				title: {
+					display: true,
+					text: 'Number of books read per month',
+					font: { size: 16 },
+				},
+				tooltip: {
+					callbacks: {
+						title: function(tooltipItem) {
+							const dataIndex = tooltipItem[0].dataIndex
+							const month = tooltipItem[0].dataset.data[dataIndex].x.getMonth()
+							const year = tooltipItem[0].dataset.data[dataIndex].x.getFullYear()
+							const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+							return months[month] + " " + year + ": " +  tooltipItem[0].dataset.data[dataIndex].y + " read"
+						},
+						label: function(tooltipItem) {
+							const dataIndex = tooltipItem.dataIndex
+							let return_list = []
+							for (let i=0; i<tooltipItem.dataset.data[dataIndex].book_list.length; i++){
+								return_list.push(
+									tooltipItem.dataset.data[dataIndex].book_list[i]
+								)
+							}
+							return return_list
+						}
+					}
+				}
+			}
+		})
+	}
+
 	return (
 		<div className={styles.bookCharts}>
 			{detailsVisible ?
@@ -282,6 +392,9 @@ const BookCharts = () => {
 					</div>
 					<div className={styles.chart}>
 						<Bar options={options2} data={data2}/>
+					</div>
+					<div className={styles.chart}>
+						<Line options={options3} data={data3}/>
 					</div>
 				</div>
 				: ""
