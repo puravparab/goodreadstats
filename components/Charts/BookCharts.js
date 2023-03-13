@@ -262,7 +262,7 @@ const BookCharts = () => {
 							const month = tooltipItem[0].dataset.data[dataIndex].x.getMonth()
 							const year = tooltipItem[0].dataset.data[dataIndex].x.getFullYear()
 							const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-							return months[month - 1] + " " + year
+							return months[month] + " " + year
 						}
 					}
 				}
