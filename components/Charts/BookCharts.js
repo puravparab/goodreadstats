@@ -20,12 +20,17 @@ const BookCharts = () => {
 	const [data3, setData3] = useState({})
 	const [options3, setOptions3] = useState({})
 
+	// Day read vs number of books read
+	const [data4, setData4] = useState({})
+	const [options4, setOptions4] = useState({})
+
 	useEffect(() => {
 		window.addEventListener('storage', () => {
 			const data = JSON.parse(localStorage.getItem('goodreads_data'))
 			createChart1(data)
 			createChart2(data)
 			createChart3(data)
+			createChart4(data)
 			setDetailsVisible(true)
 		})
 	}, [])
@@ -255,7 +260,7 @@ const BookCharts = () => {
 			plugins: {
 				title: {
 					display: true,
-					text: 'Number of pages read per month',
+					text: 'Number of pages read over time',
 					font: { size: 16 },
 				},
 				tooltip: {
@@ -338,7 +343,7 @@ const BookCharts = () => {
 					},
 					title: {
 						display: true,
-						text: 'Date Read'
+						text: 'Month Read'
 					}
 				},
 				y: {
@@ -352,7 +357,7 @@ const BookCharts = () => {
 			plugins: {
 				title: {
 					display: true,
-					text: 'Number of books read per month',
+					text: 'Number of books read over time',
 					font: { size: 16 },
 				},
 				tooltip: {
@@ -380,6 +385,82 @@ const BookCharts = () => {
 		})
 	}
 
+	// Chart 4: No of books per day of the week
+	const createChart4 = (data) => {
+		let booksxday = []
+
+		let temp_json = {}
+
+		for (let i=0; i<data.length; i++){
+			if (data[i]["Exclusive Shelf"] == 'read'){
+				// Store from "Date Read"
+				let year_read = parseInt(data[i]["Date Read"].split('/')[0])
+				let month_read = parseInt(data[i]["Date Read"].split('/')[1])
+				let day_read = parseInt(data[i]["Date Read"].split('/')[2])
+
+				// Store in formate ('YYYY-MM-DD')
+				let date_read = year_read + "-" + month_read + "-" + day_read
+
+				// If year read is not empty
+				if (year_read){
+					date_read = new Date(date_read)
+					let day = date_read.getDay()
+					// If entry exists
+					if(temp_json[day]){
+						temp_json[day] += 1
+					} else{
+						temp_json[day] = 1
+					}
+				}
+			}
+		}
+
+		// Populate booksxday 
+		const days = ['Sun', 'Mon', 'Tue', "Wed", 'Thu', 'Fri', 'Sat']
+		for (let i=0; i<days.length; i++){
+			if (temp_json[i] == null){
+				temp_json[i] = 0
+			}
+			booksxday.push({
+				x: days[i],
+				y: temp_json[i]
+			})
+		}
+
+		setData4({
+			datasets: [{
+				label: "Books read",
+				data: booksxday,
+				backgroundColor: "rgb(102,187,106)",
+			}]
+		})
+
+		setOptions4({
+			aspectRatio: 1,
+			scales: {
+				x: {
+					title: {
+						display: true,
+						text: 'Day of the week'
+					}
+				},
+				y: {
+					title: {
+						display: true,
+						text: 'Number of books read'
+					}
+				}
+			},
+			plugins: {
+				title: {
+					display: true,
+					text: 'Number of books read per day',
+					font: { size: 16 },
+				}
+			}
+		})
+	}
+
 	return (
 		<div className={styles.bookCharts}>
 			{detailsVisible ?
@@ -395,6 +476,9 @@ const BookCharts = () => {
 					</div>
 					<div className={styles.chart}>
 						<Line options={options3} data={data3}/>
+					</div>
+					<div className={styles.chart}>
+						<Bar options={options4} data={data4}/>
 					</div>
 				</div>
 				: ""
