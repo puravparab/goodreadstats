@@ -257,17 +257,13 @@ const BookCharts = () => {
 				},
 				tooltip: {
 					callbacks: {
-// 						label: function(tooltipItem) {
-// 							const dataIndex = tooltipItem.dataIndex
-// 							const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-// 							const month = months[tooltipItem.dataset.data[dataIndex].x_month - 1]
-// 
-// 							return [
-// 								tooltipItem.dataset.data[dataIndex].book,
-// 								"Read/Added : " + month + " " + tooltipItem.dataset.data[dataIndex].x_year,
-// 								"Published : " + tooltipItem.dataset.data[dataIndex].y
-// 							]
-// 						}
+						title: function(tooltipItem) {
+							const dataIndex = tooltipItem[0].dataIndex
+							const month = tooltipItem[0].dataset.data[dataIndex].x.getMonth()
+							const year = tooltipItem[0].dataset.data[dataIndex].x.getFullYear()
+							const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+							return months[month - 1] + " " + year
+						}
 					}
 				}
 			},
