@@ -40,12 +40,12 @@ const BookCharts = () => {
 		// Iterate through the list of books
 		for (let i=0; i < data.length; i++){
 			// Store from "Date Read"
-			let year_read = parseInt(data[i]["Date Read"].split('/')[2])
-			let month_read = parseInt(data[i]["Date Read"].split('/')[0])
+			let year_read = parseInt(data[i]["Date Read"].split('/')[0])
+			let month_read = parseInt(data[i]["Date Read"].split('/')[1])
 
 			// Store frm "Date Added"
-			let year_added = parseInt(data[i]["Date Added"].split('/')[2])
-			let month_added = parseInt(data[i]["Date Added"].split('/')[0])
+			let year_added = parseInt(data[i]["Date Added"].split('/')[0])
+			let month_added = parseInt(data[i]["Date Added"].split('/')[1])
 
 			// Store year book was published
 			let year_published = parseInt(data[i]["Original Publication Year"])
@@ -160,7 +160,6 @@ const BookCharts = () => {
 							const dataIndex = tooltipItem.dataIndex
 							const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 							const month = months[tooltipItem.dataset.data[dataIndex].x_month - 1]
-
 							return [
 								tooltipItem.dataset.data[dataIndex].book,
 								"Read/Added : " + month + " " + tooltipItem.dataset.data[dataIndex].x_year,
@@ -185,9 +184,9 @@ const BookCharts = () => {
 		for (let i=0; i < data.length; i++){
 			if (data[i]["Exclusive Shelf"] == 'read'){
 				// Store from "Date Read"
-				let year_read = parseInt(data[i]["Date Read"].split('/')[2])
-				let month_read = parseInt(data[i]["Date Read"].split('/')[0])
-				let day_read = parseInt(data[i]["Date Read"].split('/')[1])
+				let year_read = parseInt(data[i]["Date Read"].split('/')[0])
+				let month_read = parseInt(data[i]["Date Read"].split('/')[1])
+				let day_read = parseInt(data[i]["Date Read"].split('/')[2])
 
 				// Store in formate ('YYYY-MM-DD')
 				let date_read = year_read + "-" + month_read + "-" + day_read
