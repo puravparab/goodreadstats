@@ -21,7 +21,7 @@
 	flex-direction: row;
 	justify-content: center;
 	flex-wrap: wrap;
-	gap: 40px 40px;
+	gap: 20px 20px;
 	width: 100%;
 	margin: 40px 0px;
 }
