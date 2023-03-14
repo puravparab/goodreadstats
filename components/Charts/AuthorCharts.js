@@ -53,20 +53,21 @@ const AuthorCharts = () => {
 			}
 		}
 
-		console.log(authorData)
-
 		return authorData
 	}
 
 	// Chart 1: avg author rating vs no of books read
 	const createChart1 = (data) => {
+		// JSON containing authors ratings and books
 		let ratingxbooks = []
+
 		for (const author in data){
 			let total_ratings = 0
+
 			for (let i=0; i<data[author]["book_list"].length; i++){
 				total_ratings += parseInt(data[author]["book_list"][i]["rating"])
 			}
-			console.log(total_ratings)
+
 			let avg_rating = total_ratings / parseInt(data[author]["num_books"])
 			ratingxbooks.push({
 				x: avg_rating,
@@ -74,8 +75,6 @@ const AuthorCharts = () => {
 				author: author
 			})
 		}
-
-		console.log(ratingxbooks)
 
 		setData1({
 			datasets: [{
