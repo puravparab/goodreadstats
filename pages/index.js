@@ -17,7 +17,7 @@ const Home = () => {
 				/>
 				<link rel="canonical" href="/" />
 				<meta property="og:title" content=">Goodreadstats" />
-				<meta property="og:url" content="" />
+				<meta property="og:url" content="https://goodreadstats.vercel.app/" />
 				<meta 
 					property="og:description" 
 					content="Statistics for Goodreads"
