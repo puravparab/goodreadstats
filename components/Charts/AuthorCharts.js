@@ -32,7 +32,7 @@ const AuthorCharts = () => {
 				const rating = data[i]["My Rating"]
 
 				// If valid rating
-				if (rating){
+				if (rating && rating > 0){
 					// If author entry
 					if (authorData[author]){
 						authorData[author]["book_list"].push({
