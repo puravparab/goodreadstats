@@ -5,6 +5,11 @@ import { Scatter } from 'react-chartjs-2';
 
 import styles from '../../styles/Charts.module.css'
 
+// AUTHOR CHARTS
+// 
+// Chart 1: 
+// 	- Scatter plot showing the average ratings the user has given each author compared to the number of books read
+
 const AuthorCharts = () => {
 	const [detailsVisible, setDetailsVisible] = useState(false)
 
@@ -21,6 +26,7 @@ const AuthorCharts = () => {
 		})
 	}, [])
 
+	// Get a json containing data specific to the authors of read books
 	const getAuthors = (data) => {
 		let authorData = {}
 
@@ -56,7 +62,8 @@ const AuthorCharts = () => {
 		return authorData
 	}
 
-	// Chart 1: avg author rating vs no of books read
+	// Chart 1:
+	// 	- Scatter plot showing the average ratings the user has given each author compared to the number of books read
 	const createChart1 = (data) => {
 		// JSON containing authors ratings and books
 		let ratingxbooks = []

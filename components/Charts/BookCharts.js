@@ -5,6 +5,20 @@ import { Scatter, Bar, Line} from 'react-chartjs-2';
 
 import styles from '../../styles/Charts.module.css'
 
+// BOOK CHARTS
+// 
+// Chart 1: 
+// 	- Scatter plot that shows two datasets (Date read or Date added compared to Date published)
+// 
+// Chart 2: 
+// 	- Bar chart plotting the number of pages and the month book was finished
+// 
+// Chart 3: 
+// 	- Line chart plotting number of books read and the month book was finished
+// 
+// Chart 4: 
+// 	- Bar chart plotting the number of books finished on each day of the week
+
 const BookCharts = () => {
 	const [detailsVisible, setDetailsVisible] = useState(false)
 
@@ -35,7 +49,8 @@ const BookCharts = () => {
 		})
 	}, [])
 
-	// Chart 1: Date read/added vs date published
+	// Chart 1:
+	// 	- Scatter plot that shows two datasets (Date read or Date added compared to Date published)
 	const createChart1 = (data) => {
 		// json containing x(date read) and y(date published) values
 		let readxpublished = []
@@ -182,7 +197,8 @@ const BookCharts = () => {
 		})
 	}
 
-	// Chart 2: Number of pages read per month
+	// Chart 2:
+	// 	- Bar chart plotting the number of pages and the month book was finished
 	const createChart2 = (data) => {
 		// JSON containing pages vs date read
 		let pagesxread = []
@@ -281,7 +297,8 @@ const BookCharts = () => {
 		})
 	}
 
-	// Cahrt 3: Number of books read per month
+	// Chart 3:
+	// 	- Line chart plotting number of books read and the month book was finished
 	const createChart3 = (data) => {
 		// JSON containing books vs month data
 		let bookxmonth = []
@@ -395,7 +412,8 @@ const BookCharts = () => {
 		})
 	}
 
-	// Chart 4: Day of the week book was finished
+	// Chart 4:
+	// 	- Bar chart plotting the number of books finished on each day of the week
 	const createChart4 = (data) => {
 		let booksxday = []
 
