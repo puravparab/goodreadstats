@@ -20,7 +20,7 @@ const BookCharts = () => {
 	const [data3, setData3] = useState({})
 	const [options3, setOptions3] = useState({})
 
-	// Day read vs number of books read
+	// Day book finished vs number of books read
 	const [data4, setData4] = useState({})
 	const [options4, setOptions4] = useState({})
 
@@ -198,14 +198,17 @@ const BookCharts = () => {
 				let month_read = parseInt(data[i]["Date Read"].split('/')[1])
 				let day_read = parseInt(data[i]["Date Read"].split('/')[2])
 
-				// Store in formate ('YYYY-MM-DD')
-				let date_read = year_read + "-" + month_read + "-" + day_read
+				// Store in format ('YYYY-MM-DD')
+				// let date_read = year_read + "-" + month_read + "-" + day_read
+				// OR
+				// Store in format ('YYYY-MM')
+				let date_read = year_read + "-" + month_read
 
 				// If year read is not empty
 				if (year_read){
 					let num_pages = parseInt(data[i]["Number of Pages"])
 					// If number of pages is not empty
-					if (num_pages != null){
+					if (num_pages){
 						// If entry exists add pages
 						if (temp_json[date_read] != null){
 							temp_json[date_read] += num_pages
@@ -312,8 +315,15 @@ const BookCharts = () => {
 			}
 		}
 
+		// Sort dates in temp_json
+		const sortedDates = Object.keys(temp_json).sort((a, b) => new Date(a) - new Date(b));
+		const sortedObject = sortedDates.reduce((acc, date) => {
+			acc[date] = temp_json[date];
+			return acc;
+		}, {});
+
 		// Iterate through temp_json and populate bookxmonth
-		for (const key in temp_json){
+		for (const key in sortedObject){
 			bookxmonth.push({
 				x: new Date(key),
 				y: temp_json[key]["num_books"],
@@ -385,7 +395,7 @@ const BookCharts = () => {
 		})
 	}
 
-	// Chart 4: No of books per day of the week
+	// Chart 4: Day of the week book was finished
 	const createChart4 = (data) => {
 		let booksxday = []
 

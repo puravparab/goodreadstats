@@ -33,7 +33,9 @@ const Details = () => {
 			// If book is read
 			if (data[i]["Exclusive Shelf"] == "read"){
 				books_read++
-				pages_read = pages_read + parseInt(data[i]["Number of Pages"])
+				if (data[i]["Number of Pages"]){
+					pages_read = pages_read + parseInt(data[i]["Number of Pages"])
+				}
 
 				// Store authors of books read
 				if (authors_read_list[data[i]["Author"]]){
