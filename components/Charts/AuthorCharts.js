@@ -31,9 +31,9 @@ const AuthorCharts = () => {
 				const book = data[i]["Title"]
 				const rating = data[i]["My Rating"]
 
-				// If valid rating
+				// If user has rated the book
 				if (rating && rating > 0){
-					// If author entry
+					// If author entry exists in authorData
 					if (authorData[author]){
 						authorData[author]["book_list"].push({
 							title: book,
@@ -63,11 +63,12 @@ const AuthorCharts = () => {
 
 		for (const author in data){
 			let total_ratings = 0
-
+			// Iterate through author's book list
 			for (let i=0; i<data[author]["book_list"].length; i++){
 				total_ratings += parseInt(data[author]["book_list"][i]["rating"])
 			}
 
+			// Get average rating
 			let avg_rating = total_ratings / parseInt(data[author]["num_books"])
 			ratingxbooks.push({
 				x: avg_rating,
