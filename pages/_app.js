@@ -6,12 +6,12 @@ function MyApp({ Component, pageProps }) {
 	return (
 		<>
 			<Head>
-				<link rel="icon" href="" />
+				<link rel="icon" href="/favicon.ico" />
 				<meta name="author" content="goodreadstats" />
 				<meta name="twitter:card" content="" />
 				<meta name="twitter:image" content="" />
 				<meta name="twitter:site" content="" />
-				<meta name="twitter:creator" content="" />
+				<meta name="twitter:creator" content="@notpurav" />
 				<meta property="og:type" content="website" />
 				<meta property="og:image" content="" />
 			</Head>
