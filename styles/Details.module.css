@@ -26,6 +26,9 @@
 	display: flex;
 	flex-direction: column;
 	gap: 5px 0px;
+	background: whitesmoke;
+	padding: 20px;
+	border: 1px solid black;
 }
 
 .detailsContainer .detailsColumn h4{
