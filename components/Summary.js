@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import styles from '../styles/Details.module.css'
 
 const Summary = () => {
 	const [summaryVisible, setSummaryVisible] = useState(false)
@@ -8,8 +9,6 @@ const Summary = () => {
 	useEffect(() => {
 		window.addEventListener('storage', () => {
 			const data = JSON.parse(localStorage.getItem('goodreads_data'))
-			// parseData(data)
-			// setSummaryVisible(true)
 			populateSummary(data)
 		})
 	}, [])
@@ -121,7 +120,7 @@ const Summary = () => {
 					total_books++
 					const pages = parseInt(author_data[key][i]["pages"])
 					if (pages){total_pages_read += pages}
-						
+
 					const rating = parseInt(author_data[key][i]["rating"])
 					const avg_rating = parseInt(author_data[key][i]["avg_rating"])
 					if(rating != null && rating != 0 && avg_rating != null && avg_rating != 0){
@@ -155,11 +154,43 @@ const Summary = () => {
 					term2 = 10 * total_avg_rating / books_read_for_avg
 				}
 
-				term3 = total_books * 20
+				term3 = total_books * 30
 				score = term1 + term2 + term3
 			}
 			author_ranking.push([key, score, total_books, total_pages_read])
 		}
+
+		// Rank authors
+		author_ranking.sort((a, b) => {
+			// Sort based on score
+			if (b[1] !== a[1]){
+				return b[1] - a[1];
+			}
+			// If scores are equal, sort based on no of books
+			return b[2] - a[2];
+		})
+
+		setRender(
+			<>
+				<div className={styles.summaryColumn}>
+					<p>Books read: {num_books}</p>
+					<p>Total books: {total_books}</p>
+					<p>Pages read: {pages_read}</p>
+					<p>Pages to be read: {total_pages - pages_read}</p>
+				</div>
+				<div className={styles.summaryColumn}>
+					<p>No of authors read: {num_authors}</p>
+					<p>Total authors: {total_authors}</p>
+				</div>
+				<div className={styles.summarysColumn}>
+					<h4>Top authors:</h4>
+					<p>1. {author_ranking[0][0]} </p>
+					<p>2. {author_ranking[1][0]} </p>
+					<p>3. {author_ranking[2][0]} </p>
+				</div> 
+			</>
+		)
+		setSummaryVisible(true)
 	}
 
 	return (
@@ -168,7 +199,7 @@ const Summary = () => {
 				<div className={styles.summaryContainer}>
 					<h1>Summary</h1>
 					<div className={styles.summaryContent}>
-						{renderDetails}
+						{render}
 					</div>
 				</div>
 
