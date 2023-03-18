@@ -1,5 +1,9 @@
 import { useState, useEffect } from 'react'
-import styles from '../styles/Details.module.css'
+import Image from 'next/image'
+import styles from '../styles/Summary.module.css'
+
+import BookImg from '../public/assets/images/book_stack.png'
+import AuthorImg from '../public/assets/images/typewriter.png'
 
 const Summary = () => {
 	const [summaryVisible, setSummaryVisible] = useState(false)
@@ -170,23 +174,49 @@ const Summary = () => {
 			return b[2] - a[2];
 		})
 
+		// Create list of top three authors
+		const top_authors = author_ranking.splice(0,3).map((row, key) => {
+			return (
+				<p key={key}>{key + 1}. {row[0]} - {row[2]} book(s)</p>
+			)
+		})
+
 		setRender(
 			<>
 				<div className={styles.summaryColumn}>
-					<p>Books read: {num_books}</p>
-					<p>Total books: {total_books}</p>
-					<p>Pages read: {pages_read}</p>
-					<p>Pages to be read: {total_pages - pages_read}</p>
+					<div className={styles.summaryHeading}>
+						<h3>Book Stats</h3>
+						<Image 
+							src={BookImg}
+							alt="stack of books"
+							width={35}
+							height={35}
+						/>
+					</div>
+					<div className={styles.summaryBody}>
+						<p>Books read: {num_books}</p>
+						<p>Total books: {total_books}</p>
+						<p>Pages read: {pages_read}</p>
+						<p>Pages to be read: {total_pages - pages_read}</p>
+					</div>
 				</div>
+
 				<div className={styles.summaryColumn}>
-					<p>No of authors read: {num_authors}</p>
-					<p>Total authors: {total_authors}</p>
-				</div>
-				<div className={styles.summarysColumn}>
-					<h4>Top authors:</h4>
-					<p>1. {author_ranking[0][0]} </p>
-					<p>2. {author_ranking[1][0]} </p>
-					<p>3. {author_ranking[2][0]} </p>
+					<div className={styles.summaryHeading}>
+						<h3>Author Stats</h3>
+						<Image 
+							src={AuthorImg}
+							alt="typewriter"
+							width={35}
+							height={35}
+						/>
+					</div>
+					<div className={styles.summaryBody}>
+						<p>Number of authors read: {num_authors}</p>
+						<p>Total authors: {total_authors}</p>
+						<h4>Top authors:</h4>
+						{top_authors}
+					</div>
 				</div> 
 			</>
 		)
@@ -197,7 +227,7 @@ const Summary = () => {
 		<>
 			{summaryVisible ?
 				<div className={styles.summaryContainer}>
-					<h1>Summary</h1>
+					<h2>Summary</h2>
 					<div className={styles.summaryContent}>
 						{render}
 					</div>
