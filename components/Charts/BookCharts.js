@@ -18,6 +18,9 @@ import styles from '../../styles/Charts.module.css'
 // 
 // Chart 4: 
 // 	- Bar chart plotting the number of books finished on each day of the week
+// 	
+// Chart 5:
+// 	- Scatter plot that plots the user rating of a book to the average rating
 
 const BookCharts = () => {
 	const [detailsVisible, setDetailsVisible] = useState(false)
@@ -38,6 +41,10 @@ const BookCharts = () => {
 	const [data4, setData4] = useState({})
 	const [options4, setOptions4] = useState({})
 
+	// USer rating vs average rating of books read
+	const [data5, setData5] = useState({})
+	const [options5, setOptions5] = useState({})
+
 	useEffect(() => {
 		window.addEventListener('storage', () => {
 			const data = JSON.parse(localStorage.getItem('goodreads_data'))
@@ -45,6 +52,7 @@ const BookCharts = () => {
 			createChart2(data)
 			createChart3(data)
 			createChart4(data)
+			createChart5(data)
 			setDetailsVisible(true)
 		})
 	}, [])
@@ -489,6 +497,85 @@ const BookCharts = () => {
 		})
 	}
 
+	// Chart 5:
+	// 	- Scatter plot that plots the user rating of a book to the average rating
+	const createChart5 = (data) => {
+		let ratings = []
+
+		for (let i=0; i<data.length; i++){
+			if (data[i]["Exclusive Shelf"] == 'read'){
+				const user_rating = data[i]["My Rating"]
+				const average_rating = data[i]["Average Rating"]
+				if (user_rating || user_rating != 0){
+					const book = data[i]["Title"]
+					ratings.push({
+						x: user_rating,
+						y: average_rating,
+						book: book
+					})
+				}
+			}
+		}
+
+		setData5({
+			datasets: [
+				{
+					label: "Book Read",
+					data: ratings,
+					pointRadius: 4,
+					pointBackgroundColor: "rgb(102,187,106)",
+				}
+			]
+		})
+		setOptions5({
+			aspectRatio: 1,
+			scales: {
+				x: {
+					title: {
+						display: true,
+						text: 'Your rating'
+					},
+					min: 0,
+					max: 5,
+					ticks: {
+						stepSize: 1
+					}
+				},
+				y: {
+					title: {
+						display: true,
+						text: 'Average rating'
+					},
+					min: 0,
+					max: 5,
+					ticks: {
+						stepSize: 1
+					}
+				}
+			},
+			clip: false,
+			plugins: {
+				title: {
+					display: true,
+					text: 'Your rating vs Average rating',
+					font: { size: 16 },
+				},
+				tooltip: {
+					callbacks: {
+						label: function(tooltipItem) {
+							const dataIndex = tooltipItem.dataIndex
+							return [
+								tooltipItem.dataset.data[dataIndex].book,
+								"Your rating: " + tooltipItem.dataset.data[dataIndex].x,
+								"Avg rating: " + tooltipItem.dataset.data[dataIndex].y
+							]
+						}
+					}
+				}
+			},
+		})
+	}
+
 	return (
 		<div className={styles.bookCharts} id='Book-Stats'>
 			{detailsVisible ?
@@ -507,6 +594,9 @@ const BookCharts = () => {
 					</div>
 					<div className={styles.chart}>
 						<Bar options={options4} data={data4}/>
+					</div>
+					<div className={styles.chart}>
+						<Scatter options={options5} data={data5}/>
 					</div>
 				</div>
 				: ""
