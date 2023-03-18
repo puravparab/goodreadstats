@@ -6,7 +6,7 @@
 	gap: 30px 0px;
 	width: 100%;
 	margin: 0px 0px 50px 0px;
-	padding: 20px 0px 0px 0px;
+	padding: 0px 0px 0px 0px;
 	border-top: 2px solid rgb(88, 83, 78);
 }
 
@@ -65,4 +65,36 @@
 	text-align: center;
 	font-size: 20px;
 	color: rgb(88, 83, 78);
+}
+
+.navbarContainer{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	padding: 10px 10px;
+	border: 2px solid rgb(88, 83, 78);
+	border-top: none;
+	border-bottom-left-radius: 14px;
+	border-bottom-right-radius: 14px;
+	width: fit-content;
+	margin: auto;
+}
+
+.navbarContainer a{
+	color: rgb(85, 67,53);
+	font-size: 22px;
+	font-weight: bold;
+	padding: 10px 20px;
+}
+.navbarContainer a:hover{
+	color: rgb(158, 138, 127);
+}
+
+@media (max-width: 600px){
+	.navbarContainer a{
+		font-size: 17px;
+		font-weight: bold;
+		padding: 5px 10px;
+	}
 }

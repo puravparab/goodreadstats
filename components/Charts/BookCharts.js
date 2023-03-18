@@ -490,7 +490,7 @@ const BookCharts = () => {
 	}
 
 	return (
-		<div className={styles.bookCharts}>
+		<div className={styles.bookCharts} id='Book-Stats'>
 			{detailsVisible ?
 				<h2>Book Stats</h2> : ""
 			}

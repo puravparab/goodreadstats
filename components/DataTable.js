@@ -29,7 +29,7 @@ const DataTable = () => {
 	return (
 		<>
 			{headers.length > 0 && jsonData.length > 0 && (
-				<div className={styles.dataTableContainer}>	
+				<div className={styles.dataTableContainer} id='Data-Table'>	
 					<table className={styles.dataTable}>
 						<thead>
 							<tr>

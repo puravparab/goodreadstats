@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
+import Navbar from './Navbar.js'
 import styles from '../styles/Summary.module.css'
-
 import BookImg from '../public/assets/images/book_stack.png'
 import AuthorImg from '../public/assets/images/typewriter.png'
 
@@ -225,14 +225,16 @@ const Summary = () => {
 
 	return (
 		<>
-			{summaryVisible ?
-				<div className={styles.summaryContainer}>
-					<h2>Summary</h2>
-					<div className={styles.summaryContent}>
-						{render}
+			{summaryVisible ? 
+				<>
+					<div className={styles.summaryContainer}>
+						<Navbar />
+						<h2>Summary</h2>
+						<div className={styles.summaryContent}>
+							{render}
+						</div>
 					</div>
-				</div>
-
+				</>
 				: ""
 			}
 		</>
