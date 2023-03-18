@@ -1,7 +1,7 @@
 .dataTableContainer{
 	border: 3px solid rgb(25, 28, 40);
 	border-radius: 10px;
-	height: 60vh;
+	height: 70vh;
 	overflow-x: auto;
 	overflow-y: scroll;
 }

@@ -232,7 +232,7 @@ const AuthorCharts = () => {
 	return (
 		<div className={styles.bookCharts}>
 			{detailsVisible ?
-				<h1>Author Stats</h1> : ""
+				<h2>Author Stats</h2> : ""
 			}
 			{detailsVisible ?
 				<div className={styles.bookChartsMain}>

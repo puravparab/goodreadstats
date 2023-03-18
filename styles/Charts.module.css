@@ -10,10 +10,10 @@
 	flex-direction: column;
 	width: 100%;
 }
-.bookCharts h1{
+.bookCharts h2{
 	color: rgb(85, 67,53);
 	text-align: center;
-	font-size: 30px;
+	font-size: 32px;
 }
 
 .bookCharts .bookChartsMain{
