@@ -15,6 +15,7 @@ function MyApp({ Component, pageProps }) {
 				<meta name="twitter:creator" content="@notpurav" />
 				<meta property="og:type" content="website" />
 				<meta property="og:image" content="https://goodreadstats.vercel.app/favicon.ico" />
+				<meta name="google-site-verification" content="-bbeXHZvZm4OaCASz8xD2sFDEQNKh-l0uE7M7mLR-v8" />
 			</Head>
 			
 			{/* Google Analytics */}
