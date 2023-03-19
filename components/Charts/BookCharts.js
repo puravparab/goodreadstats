@@ -506,7 +506,7 @@ const BookCharts = () => {
 			if (data[i]["Exclusive Shelf"] == 'read'){
 				const user_rating = data[i]["My Rating"]
 				const average_rating = data[i]["Average Rating"]
-				if (user_rating || user_rating != 0){
+				if (user_rating && user_rating != 0 && average_rating && average_rating != 0){
 					const book = data[i]["Title"]
 					ratings.push({
 						x: user_rating,

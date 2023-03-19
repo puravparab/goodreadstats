@@ -198,6 +198,8 @@ const Summary = () => {
 						<p>Total books: {total_books}</p>
 						<p>Pages read: {pages_read}</p>
 						<p>Pages to be read: {total_pages - pages_read}</p>
+						<p>Average pages read per month: </p>
+						<p>ETA to finish unread books: </p>
 					</div>
 				</div>
 
