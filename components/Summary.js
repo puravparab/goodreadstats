@@ -96,7 +96,6 @@ const Summary = () => {
 						status: "unread"
 					})
 				} else{
-					num_authors += 1
 					total_authors += 1
 					author_data[author] = [{
 						book: book,
@@ -181,6 +180,20 @@ const Summary = () => {
 			)
 		})
 
+		// Get reading rate = Pages read/ (Difference b/w earliest date read and latest date read)
+		const validDates = data
+			.filter(book => book["Date Read"])
+			.map(book => new Date(book["Date Read"]))
+		// Get earliest and latest dates
+		const earliestDate = new Date(Math.min(...validDates))
+		const latestDate = new Date(Math.max(...validDates))
+		// Calculate number of months in between earliest and latest dates
+		const monthsDiff = Math.ceil((latestDate - earliestDate) / (1000 * 60 * 60 * 24 * 30.44)) + 1
+		const reading_rate = pages_read / monthsDiff
+
+		// Get estimated time to finish remaining books
+		const etr = (total_pages - pages_read) / reading_rate 
+
 		setRender(
 			<>
 				<div className={styles.summaryColumn}>
@@ -198,8 +211,8 @@ const Summary = () => {
 						<p>Total books: {total_books}</p>
 						<p>Pages read: {pages_read}</p>
 						<p>Pages to be read: {total_pages - pages_read}</p>
-						<p>Average pages read per month: </p>
-						<p>ETA to finish unread books: </p>
+						<p>Average pages read per month: {reading_rate.toFixed(2)} </p>
+						<p>ETR (Estimated time to read): {etr.toFixed(2)} months</p>
 					</div>
 				</div>
 
