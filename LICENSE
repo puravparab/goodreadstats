@@ -1,55 +1,3 @@
-<p align="center">
-    <img src="https://github.com/puravparab/goodreadstats/blob/243eda3f3b0d523f0255059d93325e74558a8b14/public/favicon.ico"/>
-</p>
-
-<p align="center">
-	<h1 align="center">
-		Goodreadstats
-	</h1>
-	<p align="center">
-	    Statistics for your goodreads reading history
-	</p
-</p>
-
-# Requirements
-
-- npm
-- node
-- Docker
-
----
-
-# Installation
-
-Clone the repository
-```
-git clone https://github.com/puravparab/whatanimal.git
-cd Goodreadstats
-```
-## Using docker compose
-Create docker image
-```
-docker compose up --build
-```
-
-Run a docker container
-```
-docker compose up
-```
-## Without docker
-Install dependencies from package-lock.json
-```
-npm ci
-```
-Run in development mode
-```
-npm run dev
-```
-
----
-
-# LICENSE
-
 MIT License
 
 Copyright (c) 2023 Purav Parab
@@ -71,7 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
----
-
-Original Creator - [Purav Parab](https://github.com/puravparab)

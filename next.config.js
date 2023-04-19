@@ -1,7 +1,11 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+module.exports = {
   reactStrictMode: true,
   swcMinify: true,
+  i18n: {
+    locales: ['en'],
+    defaultLocale: 'en',
+  },
   webpackDevMiddleware: config => {
     config.watchOptions = {
       poll: 1000,
@@ -10,5 +14,3 @@ const nextConfig = {
     return config
   },
 }
-
-module.exports = nextConfig
