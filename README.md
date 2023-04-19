@@ -23,7 +23,7 @@
 
 Clone the repository
 ```
-git clone https://github.com/puravparab/whatanimal.git
+git clone https://github.com/puravparab/goodreadstats.git
 cd Goodreadstats
 ```
 ## Using docker compose
